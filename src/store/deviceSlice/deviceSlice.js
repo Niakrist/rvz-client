@@ -1,0 +1,75 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const deviceSlice = createSlice({
+  name: "device",
+  initialState: {
+    isLoasdinDevice: false,
+    devices: [
+      {
+        id: 1,
+        name: "Подшипник 100",
+        price: "50",
+        rating: 0,
+        title: "Подшипник 100: Купить в Санкт-Петербурге",
+        description: "Купить подшипник ГОСТ 100 в Санкт-Петербурге",
+        url: "/gost-100",
+        img: "fda4f64a-d289-4751-8517-4a37eeb8c331.jpg",
+      },
+      {
+        id: 2,
+        name: "Подшипник 101",
+        price: "60",
+        rating: 0,
+        title: "Подшипник 101: Купить в Санкт-Петербурге",
+        description: "Купить подшипник ГОСТ 101 в Санкт-Петербурге",
+        url: "/gost-101",
+        img: "fda4f64a-d289-4751-8517-4a37eeb8c331.jpg",
+      },
+      {
+        id: 11,
+        name: "Подшипник 3505",
+        price: "290",
+        rating: 0,
+        title: "Подшипник 3505: Купить в Санкт-Петербурге",
+        description: "Купить подшипник ГОСТ 3505 в Санкт-Петербурге",
+        url: "/gost-3505",
+        img: "3ff2e1e9-1d05-4ffe-b7b3-a2fe08366234.jpg",
+      },
+      {
+        id: 12,
+        name: "Подшипник 3506",
+        price: "310",
+        rating: 0,
+        title: "Подшипник 3506: Купить в Санкт-Петербурге",
+        description: "Купить подшипник ГОСТ 3506 в Санкт-Петербурге",
+        url: "/gost-3506",
+        img: "3ff2e1e9-1d05-4ffe-b7b3-a2fe08366234.jpg",
+      },
+      {
+        id: 13,
+        name: "Подшипник 3506",
+        price: "310",
+        rating: 0,
+        title: "Подшипник 3506: Купить в Санкт-Петербурге",
+        description: "Купить подшипник ГОСТ 3506 в Санкт-Петербурге",
+        url: "/gost-3506",
+        img: "3ff2e1e9-1d05-4ffe-b7b3-a2fe08366234.jpg",
+      },
+      {
+        id: 14,
+        name: "Подшипник 3506",
+        price: "310",
+        rating: 0,
+        title: "Подшипник 3506: Купить в Санкт-Петербурге",
+        description: "Купить подшипник ГОСТ 3506 в Санкт-Петербурге",
+        url: "/gost-3506",
+        img: "3ff2e1e9-1d05-4ffe-b7b3-a2fe08366234.jpg",
+      },
+    ],
+    errorDevice: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {},
+});
+
+export default deviceSlice.reducer;
