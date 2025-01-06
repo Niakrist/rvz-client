@@ -20,5 +20,5 @@ export const publicRoutes = [
   { path: SHOP_ROUTE, Component: Shop },
   { path: LOGIN_ROUTE, Component: Auth },
   { path: REGISTRATION_ROUTE, Component: Auth },
-  { path: DEVICE_ROUTE + "/:id", Component: DevicePage },
+  { path: DEVICE_ROUTE + "/:url", Component: DevicePage },
 ];

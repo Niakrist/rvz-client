@@ -11,17 +11,20 @@ import {
   SHOP_ROUTE,
 } from "../constants/routesConctants";
 import Button from "react-bootstrap/Button";
-import { toggleAuth } from "../store/userSlice/userSlice";
+import { addUser, toggleAuth } from "../store/userSlice/userSlice";
 
 const NavBar = () => {
-  const { user, isAuth } = useSelector((state) => state.user);
-
+  const { isAuth } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const history = useHistory();
 
-  const dispatch = useDispatch();
-
-  const handleClick = (value) => {
-    dispatch(toggleAuth(value));
+  const logOut = () => {
+    if (localStorage.getItem("token")) {
+      localStorage.removeItem("token");
+    }
+    dispatch(addUser(null));
+    dispatch(toggleAuth(false));
+    // history.push(LOGIN_ROUTE);
   };
 
   return (
@@ -40,16 +43,16 @@ const NavBar = () => {
             >
               Админ панель
             </Button>
-            <Button
-              onClick={() => history.push(LOGIN_ROUTE)}
-              variant="outline-light"
-            >
+            <Button onClick={logOut} variant="outline-light">
               Выйти
             </Button>
           </Nav>
         ) : (
           <Nav style={{ color: "#fff" }} className="mr-auto">
-            <Button onClick={() => handleClick(true)} variant="outline-light">
+            <Button
+              onClick={() => history.push(LOGIN_ROUTE)}
+              variant="outline-light"
+            >
               Авторизация
             </Button>
           </Nav>

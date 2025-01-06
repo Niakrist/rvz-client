@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useDispatch, useSelector } from "react-redux";
-import { toogleBrand } from "../store/brandsSlice/brandsSlice";
-import { toggleLoad } from "../store/loadsSlice/loadsSlice";
-import { toogleRolling } from "../store/rollingsSlice/rollingsSlice";
-import { toggleRow } from "../store/rowsSlice/rowsSlice";
+import { fetchBrands, toggleBrand } from "../store/brandsSlice/brandsSlice";
+import { fetchLoads, toggleLoad } from "../store/loadsSlice/loadsSlice";
+import {
+  fetchRollings,
+  toggleRolling,
+} from "../store/rollingsSlice/rollingsSlice";
+import { fetchRows, toggleRow } from "../store/rowsSlice/rowsSlice";
 import { Button } from "react-bootstrap";
 
 const Aside = () => {
@@ -17,14 +20,23 @@ const Aside = () => {
 
   const dispatch = useDispatch();
 
+  // useEffect(() => {
+  //   dispatch(fetchBrands());
+  //   dispatch(fetchLoads());
+  //   dispatch(fetchRollings());
+  //   dispatch(fetchRows());
+  // }, [dispatch]);
+
   const handleRemove = () => {
-    dispatch(toogleBrand(null));
-    dispatch(toogleRolling(null));
+    dispatch(toggleBrand(null));
+    dispatch(toggleRolling(null));
     dispatch(toggleLoad(null));
     dispatch(toggleRow(null));
   };
 
   if (isLoadingBrand) return;
+
+  if (!brands || !loads || !rollings || !rows) return;
 
   return (
     <aside>
@@ -34,7 +46,7 @@ const Aside = () => {
           <ListGroup.Item
             style={{ cursor: "pointer" }}
             active={brand.id === checkBrand?.id}
-            onClick={() => dispatch(toogleBrand(brand))}
+            onClick={() => dispatch(toggleBrand(brand))}
             key={brand.id}
           >
             {brand.name}
@@ -48,7 +60,7 @@ const Aside = () => {
           <ListGroup.Item
             style={{ cursor: "pointer" }}
             active={rolling.id === checkRolling?.id}
-            onClick={() => dispatch(toogleRolling(rolling))}
+            onClick={() => dispatch(toggleRolling(rolling))}
             key={rolling.id}
           >
             {rolling.name}

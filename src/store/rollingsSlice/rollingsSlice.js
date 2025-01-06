@@ -1,49 +1,44 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const fetchRollings = createAsyncThunk(
+  "rollings/fetchRollings",
+  async () => {
+    const { data } = await axios.get("http://localhost:5000/api/v1/rolling");
+    return data;
+  }
+);
 
 const rollingsSlice = createSlice({
   name: "rollings",
   initialState: {
     isLoadingRollings: false,
-    rollings: [
-      {
-        id: 1,
-        name: "Шариковые",
-        title: "Шариковые подшипники",
-        description: "Шариковые подшипники",
-        url: "/sharikovye",
-      },
-      {
-        id: 2,
-        name: "Роликовые",
-        title: "Роликовые подшипники",
-        description: "Роликовые подшипники",
-        url: "/rolikovye",
-      },
-      {
-        id: 3,
-        name: "Игольчатые",
-        title: "Игольчатые подшипники",
-        description: "Игольчатые подшипники",
-        url: "/igolchatye",
-      },
-      {
-        id: 4,
-        name: "Шарнирные",
-        title: "Шарнирные подшипники",
-        description: "Шарнирные подшипники",
-        url: "/sharnirnyye",
-      },
-    ],
+    rollings: [],
     checkRolling: null,
     errorRollings: null,
   },
   reducers: {
-    toogleRolling: (state, action) => {
+    toggleRolling: (state, action) => {
       state.checkRolling = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchRollings.pending, (state) => {
+        state.isLoadingRollings = true;
+        state.errorRollings = null;
+      })
+      .addCase(fetchRollings.fulfilled, (state, action) => {
+        state.isLoadingRollings = false;
+        state.rollings = action.payload;
+      })
+      .addCase(fetchRollings.rejected, (state, action) => {
+        state.isLoadingRollings = false;
+        state.errorRollings = action.payload;
+      });
+  },
 });
 
-export const { toogleRolling } = rollingsSlice.actions;
+export const { toggleRolling } = rollingsSlice.actions;
 
 export default rollingsSlice.reducer;

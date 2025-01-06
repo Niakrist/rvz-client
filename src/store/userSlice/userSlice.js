@@ -3,11 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    isAuth: true,
-    user: {
-      name: "name",
-      email: "1@2.ru",
-    },
+    isAuth: false,
+    user: null,
   },
   reducers: {
     toggleAuth: (state, action) => {

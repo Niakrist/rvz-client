@@ -1,21 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import starSrc from "../assets/star.png";
+import { fetchDeviceItem } from "../store/deviceItemSlice/deviceItemSlice";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 const DevicePage = () => {
-  const { user } = useSelector((state) => state.user);
+  // const { user } = useSelector((state) => state.user);
 
-  const device = {
-    id: 13,
-    name: "Подшипник 3506",
-    price: "310",
-    rating: 0,
-    title: "Подшипник 3506: Купить в Санкт-Петербурге",
-    description: "Купить подшипник ГОСТ 3506 в Санкт-Петербурге",
-    url: "/gost-3506",
-    img: "3ff2e1e9-1d05-4ffe-b7b3-a2fe08366234.jpg",
-  };
+  const { deviceItem } = useSelector((state) => state.deviceItem);
+  const params = useParams();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchDeviceItem(params.url));
+  }, [dispatch]);
 
   const description = [
     { id: 1, title: "Внутренний диаметр (d), мм10", description: "10" },
@@ -32,8 +32,6 @@ const DevicePage = () => {
     { id: 12, title: "Конструкция", description: "открытый" },
   ];
 
-  console.log("user: ", user);
-
   return (
     <Container className="mt-3">
       <Row>
@@ -41,12 +39,12 @@ const DevicePage = () => {
           <Image
             width={300}
             height={300}
-            src={`http://localhost:5000/${device.img}`}
+            src={`http://localhost:5000/${deviceItem.img}`}
           />
         </Col>
         <Col md={4}>
           <Row className="d-flex align-items-center">
-            <h2>{device.name}</h2>
+            <h2>{deviceItem.name}</h2>
             <div
               className="d-flex justify-content-center align-items-center"
               style={{
@@ -57,7 +55,7 @@ const DevicePage = () => {
                 fontSize: 48,
               }}
             >
-              {device.rating}
+              {deviceItem.rating}
             </div>
           </Row>
         </Col>
@@ -71,7 +69,7 @@ const DevicePage = () => {
               border: "5px solid lightgray",
             }}
           >
-            <h3>От: {device.price} руб.</h3>
+            <h3>От: {deviceItem.price} руб.</h3>
             <Button variant="outline-dark">Добавить в корзину</Button>
           </Card>
         </Col>

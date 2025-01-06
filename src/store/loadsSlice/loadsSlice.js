@@ -1,32 +1,16 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+
+export const fetchLoads = createAsyncThunk("loads/fetchLoads", async () => {
+  const { data } = await axios.get("http://localhost:5000/api/v1/load");
+  return data;
+});
 
 const loadsSlice = createSlice({
   name: "loads",
   initialState: {
     isLoadingLoads: false,
-    loads: [
-      {
-        id: 1,
-        name: "Радиальные",
-        title: "Радиальные подшипники",
-        description: "Радиальные подшипники",
-        url: "/radialnye",
-      },
-      {
-        id: 2,
-        name: "Упорные",
-        title: "Упорные подшипники",
-        description: "Упорные подшипники",
-        url: "/upornye",
-      },
-      {
-        id: 3,
-        name: "Радиально-упорные",
-        title: "Радиально-упорные подшипники",
-        description: "Радиально-упорные подшипники",
-        url: "/radialno-upornye",
-      },
-    ],
+    loads: [],
     checkLoad: null,
     errorLoads: null,
   },
@@ -34,6 +18,21 @@ const loadsSlice = createSlice({
     toggleLoad: (state, action) => {
       state.checkLoad = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchLoads.pending, (state) => {
+        state.isLoadingLoads = true;
+        state.errorLoads = null;
+      })
+      .addCase(fetchLoads.fulfilled, (state, action) => {
+        state.isLoadingLoads = false;
+        state.loads = action.payload;
+      })
+      .addCase(fetchLoads.rejected, (state, action) => {
+        state.isLoadingLoads = false;
+        state.errorLoads = action.payload;
+      });
   },
 });
 
