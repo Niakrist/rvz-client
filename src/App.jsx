@@ -24,6 +24,8 @@ function App() {
 
   const [loading, setLoading] = useState(true);
 
+  console.log("checkBrand: ", checkBrand);
+
   useEffect(() => {
     check()
       .then((data) => {

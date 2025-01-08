@@ -18,8 +18,6 @@ const Admin = () => {
 
   const { devices } = useSelector((state) => state.devices);
 
-  console.log("devices: ", devices);
-
   return (
     <>
       <Container className="d-flex gap-2">

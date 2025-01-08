@@ -4,6 +4,7 @@ import axios from "axios";
 export const fetchDevice = createAsyncThunk(
   "device/fetchDevice",
   async (params) => {
+    console.log("params: ", params);
     const { data } = await axios.get("http://localhost:5000/api/v1/device/", {
       params: params,
     });
@@ -14,13 +15,9 @@ export const fetchDevice = createAsyncThunk(
 export const asyncRemoveDevice = createAsyncThunk(
   "device/asyncRemoveDevice",
   async (id) => {
-    console.log("id: ", id);
     const { data } = await axios.delete(
       `http://localhost:5000/api/v1/device/${id}`
     );
-
-    console.log("data: ", data);
-
     return data;
   }
 );
