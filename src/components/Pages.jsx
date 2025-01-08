@@ -13,8 +13,6 @@ const Pages = () => {
     pages.push(i + 1);
   }
 
-  console.log(pages);
-
   return (
     <Pagination className="mt-5">
       {pages.map((p) => (

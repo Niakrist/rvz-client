@@ -11,6 +11,20 @@ export const fetchDevice = createAsyncThunk(
   }
 );
 
+export const asyncRemoveDevice = createAsyncThunk(
+  "device/asyncRemoveDevice",
+  async (id) => {
+    console.log("id: ", id);
+    const { data } = await axios.delete(
+      `http://localhost:5000/api/v1/device/${id}`
+    );
+
+    console.log("data: ", data);
+
+    return data;
+  }
+);
+
 const deviceSlice = createSlice({
   name: "device",
   initialState: {

@@ -40,8 +40,6 @@ function App() {
     dispatch(fetchRows());
   }, [dispatch]);
 
-  console.log("checkBrand: ", checkBrand);
-
   useEffect(() => {
     dispatch(
       fetchDevice({
