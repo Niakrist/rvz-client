@@ -9,6 +9,7 @@ import {
 } from "../store/rollingsSlice/rollingsSlice";
 import { fetchRows, toggleRow } from "../store/rowsSlice/rowsSlice";
 import { Button } from "react-bootstrap";
+import { setPage } from "../store/deviceSlice/deviceSlice";
 
 const Aside = () => {
   const { brands, checkBrand, isLoadingBrand } = useSelector(
@@ -34,6 +35,26 @@ const Aside = () => {
     dispatch(toggleRow(null));
   };
 
+  const handleChangeBrand = (brand) => {
+    dispatch(toggleBrand(brand));
+    dispatch(setPage(1));
+  };
+
+  const handleChangeRolling = (rolling) => {
+    dispatch(toggleRolling(rolling));
+    dispatch(setPage(1));
+  };
+
+  const handleChangeLoad = (load) => {
+    dispatch(toggleLoad(load));
+    dispatch(setPage(1));
+  };
+
+  const handleChangeRow = (row) => {
+    dispatch(toggleRow(row));
+    dispatch(setPage(1));
+  };
+
   if (isLoadingBrand) return;
 
   if (!brands || !loads || !rollings || !rows) return;
@@ -46,7 +67,7 @@ const Aside = () => {
           <ListGroup.Item
             style={{ cursor: "pointer" }}
             active={brand.id === checkBrand?.id}
-            onClick={() => dispatch(toggleBrand(brand))}
+            onClick={() => handleChangeBrand(brand)}
             key={brand.id}
           >
             {brand.name}
@@ -60,7 +81,7 @@ const Aside = () => {
           <ListGroup.Item
             style={{ cursor: "pointer" }}
             active={rolling.id === checkRolling?.id}
-            onClick={() => dispatch(toggleRolling(rolling))}
+            onClick={() => handleChangeRolling(rolling)}
             key={rolling.id}
           >
             {rolling.name}
@@ -74,7 +95,7 @@ const Aside = () => {
           <ListGroup.Item
             style={{ cursor: "pointer" }}
             active={load.id === checkLoad?.id}
-            onClick={() => dispatch(toggleLoad(load))}
+            onClick={() => handleChangeLoad(load)}
             key={load.id}
           >
             {load.name}
@@ -88,7 +109,7 @@ const Aside = () => {
           <ListGroup.Item
             style={{ cursor: "pointer" }}
             active={row.id === checkRow?.id}
-            onClick={() => dispatch(toggleRow(row))}
+            onClick={() => handleChangeRow(row)}
             key={row.id}
           >
             {row.name}

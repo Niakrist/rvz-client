@@ -11,10 +11,16 @@ import { fetchBrands } from "./store/brandsSlice/brandsSlice";
 import { fetchRollings } from "./store/rollingsSlice/rollingsSlice";
 import { fetchRows } from "./store/rowsSlice/rowsSlice";
 import { fetchLoads } from "./store/loadsSlice/loadsSlice";
+import { fetchDevice } from "./store/deviceSlice/deviceSlice";
 
 function App() {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const { page } = useSelector((state) => state.devices);
+  const { checkBrand } = useSelector((state) => state.brands);
+  const { checkRolling } = useSelector((state) => state.rollings);
+  const { checkLoad } = useSelector((state) => state.loads);
+  const { checkRow } = useSelector((state) => state.rows);
 
   const [loading, setLoading] = useState(true);
 
@@ -33,6 +39,21 @@ function App() {
     dispatch(fetchRollings());
     dispatch(fetchRows());
   }, [dispatch]);
+
+  console.log("checkBrand: ", checkBrand);
+
+  useEffect(() => {
+    dispatch(
+      fetchDevice({
+        brandId: checkBrand?.id,
+        rollingId: checkRolling?.id,
+        loadId: checkLoad?.id,
+        rowId: checkRow?.id,
+        page: page,
+        limit: 16,
+      })
+    );
+  }, [dispatch, checkBrand, checkRolling, checkLoad, checkRow, page]);
 
   if (loading) {
     return <Spinner animation="grow" />;
