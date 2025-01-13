@@ -48,8 +48,6 @@ const CreateDevice = ({ show, onHide }) => {
   };
 
   const addDevice = () => {
-    console.log("info ", info);
-
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("price", data.price);
@@ -87,8 +85,7 @@ const CreateDevice = ({ show, onHide }) => {
               {brands.map((brand) => (
                 <Dropdown.Item
                   onClick={() => dispatch(toggleBrand(brand))}
-                  key={brand.id}
-                >
+                  key={brand.id}>
                   {brand.name}
                 </Dropdown.Item>
               ))}
@@ -102,8 +99,7 @@ const CreateDevice = ({ show, onHide }) => {
               {loads.map((load) => (
                 <Dropdown.Item
                   onClick={() => dispatch(toggleLoad(load))}
-                  key={load.id}
-                >
+                  key={load.id}>
                   {load.name}
                 </Dropdown.Item>
               ))}
@@ -117,8 +113,7 @@ const CreateDevice = ({ show, onHide }) => {
               {rollings.map((rolling) => (
                 <Dropdown.Item
                   onClick={() => dispatch(toggleRolling(rolling))}
-                  key={rolling.id}
-                >
+                  key={rolling.id}>
                   {rolling.name}
                 </Dropdown.Item>
               ))}
@@ -132,8 +127,7 @@ const CreateDevice = ({ show, onHide }) => {
               {rows.map((row) => (
                 <Dropdown.Item
                   onClick={() => dispatch(toggleRow(row))}
-                  key={row.id}
-                >
+                  key={row.id}>
                   {row.name}
                 </Dropdown.Item>
               ))}
@@ -209,8 +203,7 @@ const CreateDevice = ({ show, onHide }) => {
             <Col md={2}>
               <Button
                 onClick={() => removeInfo(item.id)}
-                variant="outline-danger"
-              >
+                variant="outline-danger">
                 Удалить
               </Button>
             </Col>

@@ -6,6 +6,22 @@ export const fetchRows = createAsyncThunk("rows/fetchRows", async () => {
   return data;
 });
 
+export const createAsyncRow = createAsyncThunk(
+  "rows/createRow",
+  async (row, { rejectWithValue }) => {
+    console.log("row", row);
+
+    const token = `Bearer ${localStorage.getItem("token")}`;
+    if (!token) {
+      return rejectWithValue("Token not found");
+    }
+    axios.defaults.headers.common["Authorization"] = token;
+
+    const { data } = await axios.post("http://localhost:5000/api/v1/row", row);
+    return data;
+  }
+);
+
 const rowsSlice = createSlice({
   name: "rows",
   initialState: {
@@ -13,6 +29,9 @@ const rowsSlice = createSlice({
     rows: [],
     checkRow: null,
     errroRows: null,
+    isLoadingRow: false,
+    row: {},
+    errorRow: null,
   },
   reducers: {
     toggleRow: (state, action) => {
@@ -32,6 +51,18 @@ const rowsSlice = createSlice({
       .addCase(fetchRows.rejected, (state, action) => {
         state.isLoadingRows = false;
         state.errroRows = action.payload;
+      })
+      .addCase(createAsyncRow.pending, (state) => {
+        state.isLoadingRow = true;
+        state.errorRow = null;
+      })
+      .addCase(createAsyncRow.fulfilled, (state, action) => {
+        state.isLoadingRow = false;
+        state.row = action.payload;
+      })
+      .addCase(createAsyncRow.rejected, (state, action) => {
+        state.isLoadingRow = false;
+        state.errorRow = action.payload;
       });
   },
 });

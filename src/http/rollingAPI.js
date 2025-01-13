@@ -2,6 +2,7 @@ import { $authHost, $host } from ".";
 
 export const createRolling = async (rolling) => {
   const { data } = await $authHost.post("api/v1/rolling", rolling);
+  console.log("data: ", data);
   return data;
 };
 

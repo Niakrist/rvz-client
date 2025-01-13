@@ -8,7 +8,9 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 const DevicePage = () => {
   // const { user } = useSelector((state) => state.user);
 
-  const { deviceItem } = useSelector((state) => state.deviceItem);
+  const { deviceItem, isLoadingDeviceItem } = useSelector(
+    (state) => state.deviceItem
+  );
   const params = useParams();
 
   const dispatch = useDispatch();
@@ -16,6 +18,8 @@ const DevicePage = () => {
   useEffect(() => {
     dispatch(fetchDeviceItem(params.url));
   }, [dispatch]);
+
+  console.log("deviceItem: ", deviceItem);
 
   const description = [
     { id: 1, title: "Внутренний диаметр (d), мм10", description: "10" },
@@ -31,6 +35,8 @@ const DevicePage = () => {
     { id: 11, title: "Рядность", description: "однорядный" },
     { id: 12, title: "Конструкция", description: "открытый" },
   ];
+
+  if (isLoadingDeviceItem) return;
 
   return (
     <Container className="mt-3">
@@ -53,8 +59,7 @@ const DevicePage = () => {
                 height: 240,
                 backgroundSize: "cover",
                 fontSize: 48,
-              }}
-            >
+              }}>
               {deviceItem.rating}
             </div>
           </Row>
@@ -67,8 +72,7 @@ const DevicePage = () => {
               height: 300,
               fontSize: 32,
               border: "5px solid lightgray",
-            }}
-          >
+            }}>
             <h3>От: {deviceItem.price} руб.</h3>
             <Button variant="outline-dark">Добавить в корзину</Button>
           </Card>
@@ -76,14 +80,13 @@ const DevicePage = () => {
       </Row>
       <Row className="d-flex flex-column m-3">
         <h2>Технические характеристики</h2>
-        {description.map((info, index) => (
+        {deviceItem?.info?.map((info, index) => (
           <Row
             style={{
               backgroundColor: index % 2 === 0 ? "lightgray" : "white",
               padding: 10,
             }}
-            key={info.id}
-          >
+            key={info.id}>
             {info.title} :{info.description}
           </Row>
         ))}

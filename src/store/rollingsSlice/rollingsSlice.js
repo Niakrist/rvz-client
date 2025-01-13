@@ -9,6 +9,24 @@ export const fetchRollings = createAsyncThunk(
   }
 );
 
+export const createRolling = createAsyncThunk(
+  "rollings/createRolling",
+  async (rolling, { rejectWithValue }) => {
+    const token = `Bearer ${localStorage.getItem("token")}`;
+    if (!token) {
+      return rejectWithValue("Token not found");
+    }
+
+    axios.defaults.headers.common["Authorization"] = token;
+
+    const { data } = await axios.post(
+      "http://localhost:5000/api/v1/rolling",
+      rolling
+    );
+    return data;
+  }
+);
+
 const rollingsSlice = createSlice({
   name: "rollings",
   initialState: {
@@ -16,6 +34,9 @@ const rollingsSlice = createSlice({
     rollings: [],
     checkRolling: null,
     errorRollings: null,
+    isLoadingRolling: false,
+    rolling: {},
+    errorRolling: null,
   },
   reducers: {
     toggleRolling: (state, action) => {
@@ -35,6 +56,18 @@ const rollingsSlice = createSlice({
       .addCase(fetchRollings.rejected, (state, action) => {
         state.isLoadingRollings = false;
         state.errorRollings = action.payload;
+        state.errorRolling = null;
+      })
+      .addCase(createRolling.pending, (state) => {
+        state.isLoadingRolling = true;
+      })
+      .addCase(createRolling.fulfilled, (state, action) => {
+        state.isLoadingRolling = false;
+        state.rolling = action.payload;
+      })
+      .addCase(createRolling.rejected, (state, action) => {
+        state.isLoadingRolling = false;
+        state.errorRolling = action.payload;
       });
   },
 });

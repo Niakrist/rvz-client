@@ -3,9 +3,10 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { authRoutes, publicRoutes } from "../routes";
 import { SHOP_ROUTE } from "../constants/routesConctants";
+import { useSelector } from "react-redux";
 
 const AppRouter = () => {
-  const isAuth = true;
+  const { isAuth } = useSelector((state) => state.user);
 
   return (
     <>
